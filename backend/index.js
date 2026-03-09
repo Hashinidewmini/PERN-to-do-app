@@ -11,7 +11,7 @@ app.use("/todos", todoRoutes); // Use the imported todo routes for any requests 
                                // This means that any request to /todos will be handled by the routes defined in the todos.js file.
 
 
-                               
+
 
 app.listen(5000, () => {
     console.log("Server is running on port 5000"); // Log a message when the server starts
