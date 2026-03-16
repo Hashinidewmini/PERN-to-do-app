@@ -39,19 +39,38 @@ function App() {
     }
   }
 
-  const saveEdit= async (id) => {
-    try{
+  const saveEdit = async (id) => {
+    try {
+  
+      const currentTodo = todos.find((todo) => todo.todo_id === id);
+      const trimmedText = editedText.trim();
+  
+      if (currentTodo.description === trimmedText) {
+        setEditingTodo(null);
+        setEditedText("");
+        return;
+      }
+  
       await axios.put(`http://localhost:5000/todos/${id}`, {
-        description: editedText,
+        description: trimmedText,
+        completed: currentTodo.completed
       });
+  
+      setTodos(
+        todos.map((todo) =>
+          todo.todo_id === id
+            ? { ...todo, description: trimmedText }
+            : todo
+        )
+      );
+  
       setEditingTodo(null);
       setEditedText("");
-      getTodos();
-
-    } catch (err){
+  
+    } catch (err) {
       console.error(err.message);
     }
-  }
+  };
 
   const deleteTodo = async (id) => {
     try {
