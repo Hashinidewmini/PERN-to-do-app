@@ -41,7 +41,7 @@ router.put("/:id", async (req, res) => {
         const { description, completed } = req.body; //to extract the new description and completed status from the request body.
         const updatedTodo = await pool.query(
             "UPDATE todo SET description = $1, completed = $2 WHERE todo_id = $3 RETURNING *",
-            [description, completed, id] //to execute a SQL query to update the specified todo in the database. The RETURNING * clause is used to return the updated todo after the update operation.
+            [description, completed || false, id] //to execute a SQL query to update the specified todo in the database. The RETURNING * clause is used to return the updated todo after the update operation.
             // $1, $2, and $3 are placeholders for the values of description, completed, and id, respectively. This helps prevent SQL injection attacks.
         );
 
