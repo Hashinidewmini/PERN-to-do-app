@@ -3,6 +3,7 @@ import axios from "axios";
 import {MdModeEditOutline, MdOutlineDone} from "react-icons/md";
 import {FaTrash} from "react-icons/fa6";
 import {IoClose} from "react-icons/io5"
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
 
   const getTodos = async () => {
     try{
-      const res = await axios.get("http://localhost:5000/api/todos");
+      const res = await axios.get(API_URL);
       setTodos(res.data);
       console.log(res.data);
     } catch (err) {
@@ -28,7 +29,7 @@ function App() {
   const onSubmitForm = async (e) => {
     e.preventDefault(); // prevent page refresh on form submit cuz we want to handle it with JavaScript to update our UI without reloading the page
     try{
-      await axios.post("http://localhost:5000/api/todos", {
+      await axios.post(API_URL, {
         description, completed:false
       });
       setDescription(""); // Clear the input field after adding a new task
@@ -51,7 +52,7 @@ function App() {
         return;
       }
   
-      await axios.put(`http://localhost:5000/api/todos/${id}`, {
+      await axios.put(`${API_URL}/${id}`, {
         description: trimmedText,
         completed: currentTodo.completed
       });
@@ -74,7 +75,7 @@ function App() {
 
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/todos/${id}`);
+      await axios.delete(`${API_URL}/${id}`);
       setTodos(todos.filter((todo) => todo.todo_id !== id));
 
     } catch (err) {
@@ -85,7 +86,7 @@ function App() {
   const toggleCompleted = async (id) => {
     try{
       const todo = todos.find((todo) => todo.todo_id === id);
-      await axios.put(`http://localhost:5000/api/todos/${id}`, {
+      await axios.put(`${API_URL}/${id}`, {
         description: todo.description,
         completed: !todo.completed,
       });
