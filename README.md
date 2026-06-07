@@ -54,6 +54,7 @@ to-do-app-PERN/
 ├── backend/
 │   ├── database.sql
 │   ├── db.js
+│   ├── .env
 │   ├── index.js
 │   ├── package.json
 │   ├── package-lock.json
